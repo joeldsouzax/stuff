@@ -1,8 +1,8 @@
 /** @format */
-import { option } from 'fp-ts';
+import { either, option } from 'fp-ts';
 import { flow, pipe } from 'fp-ts/lib/function';
 
-type ThemeScheme = 'light' | 'dark';
+export type ThemeScheme = 'light' | 'dark';
 
 const ColorScheme: Record<ThemeScheme, ThemeScheme> = {
   light: 'dark',
@@ -11,11 +11,17 @@ const ColorScheme: Record<ThemeScheme, ThemeScheme> = {
 
 export const updateThemeScheme = (themeScheme: ThemeScheme) => {
   document.firstElementChild.setAttribute('color-scheme', themeScheme);
+  return themeScheme;
 };
 
 export const checkThemeScheme = (themeScheme: ThemeScheme) =>
   window.matchMedia &&
   window.matchMedia(`(prefers-color-scheme: ${themeScheme})`).matches;
+
+export const getDefaultScheme = flow(
+  either.fromPredicate(checkThemeScheme, (theme) => ColorScheme[theme]),
+  either.getOrElse((theme) => theme)
+);
 
 export const checkDocumentScheme = (themeScheme: ThemeScheme) =>
   pipe(
