@@ -1,8 +1,7 @@
 ---
 import '../styles/utilities.css';
 import '../styles/components.css';
-import Header from '../components/system/StuffHeader';
-import Footer from '../components/system/StuffFooter';
+import { ThemeButton } from '../components/Button';
 ---
 
 <html lang="en">
@@ -14,9 +13,8 @@ import Footer from '../components/system/StuffFooter';
     <title>Stuff by Joel D'Souza</title>
   </head>
   <body class="home">
-    <Header client:load />
-    <h1>Hello</h1>
-    <Footer />
+    <header class="flex container"><ThemeButton client:load /></header>
+    <main class="container">Hello</main>
   </body>
 </html>
 
@@ -158,6 +156,8 @@ import Footer from '../components/system/StuffFooter';
     overflow-x: hidden;
     display: grid;
     grid-template-rows: min-content 1fr;
+    padding: var(--size-fluid-1);
+    gap: var(--size-fluid-1);
     min-height: 100vh;
     /** depends on the use case here, this is for performance */
     text-rendering: optimizeSpeed;

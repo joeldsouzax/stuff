@@ -4,7 +4,7 @@ import { flow, pipe } from 'fp-ts/lib/function';
 
 type ThemeScheme = 'light' | 'dark';
 
-const ColorScheme: Record<string, ThemeScheme> = {
+const ColorScheme: Record<ThemeScheme, ThemeScheme> = {
   light: 'dark',
   dark: 'light',
 };
@@ -27,6 +27,6 @@ export const checkDocumentScheme = (themeScheme: ThemeScheme) =>
     )
   );
 
-export const themeChangeFlow = flow(checkDocumentScheme, (theme) =>
+export const useThemeScheme = flow(checkDocumentScheme, (theme) =>
   updateThemeScheme(ColorScheme[theme])
 );
