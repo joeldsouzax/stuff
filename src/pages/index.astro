@@ -1,7 +1,7 @@
 ---
-import '../styles/utilities.css';
 import '../styles/components.css';
 import { ThemeButton } from '../components/Button';
+import Card from '../components/Card';
 ---
 
 <html lang="en">
@@ -14,7 +14,7 @@ import { ThemeButton } from '../components/Button';
   </head>
   <body class="home">
     <header class="flex container"><ThemeButton client:load /></header>
-    <main class="container">Hello</main>
+    <main class="container"><Card>Joel D'Souza</Card></main>
   </body>
 </html>
 
@@ -190,5 +190,44 @@ import { ThemeButton } from '../components/Button';
       transition-duration: 0.01ms !important;
       scroll-behavior: auto !important;
     }
+  }
+
+  /* ----------------------------
+/* Utility Classes */
+  /* ---------------------------- */
+
+  /* general classes */
+
+  .flex {
+    display: flex;
+    /* css variable with a fallback of 1rem */
+    gap: var(--gap, 1rem);
+  }
+
+  .grid {
+    display: grid;
+    /* css variable with a fallback of 1rem */
+    gap: var(--gap, 1rem);
+  }
+
+  .container {
+    padding-inline: 2em;
+    max-width: 80rem;
+    margin-inline: auto;
+  }
+
+  /* class for screen reading only, hide few things that can only be picked up by */
+  /* screen readers. */
+  /* ACCESSIBILITY */
+  .sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
   }
 </style>

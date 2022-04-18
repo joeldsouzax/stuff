@@ -19,6 +19,7 @@ export const checkThemeScheme = (themeScheme: ThemeScheme) =>
   window.matchMedia(`(prefers-color-scheme: ${themeScheme})`).matches;
 
 export const getDefaultScheme = flow(
+  () => 'dark',
   either.fromPredicate(checkThemeScheme, (theme) => ColorScheme[theme]),
   either.getOrElse((theme) => theme)
 );
@@ -33,6 +34,8 @@ export const checkDocumentScheme = (themeScheme: ThemeScheme) =>
     )
   );
 
-export const useThemeScheme = flow(checkDocumentScheme, (theme) =>
-  updateThemeScheme(ColorScheme[theme])
+export const toggleThemeScheme = flow(
+  () => 'dark',
+  checkDocumentScheme,
+  (theme) => updateThemeScheme(ColorScheme[theme])
 );

@@ -8,8 +8,13 @@ import {
   useState,
   useEffect,
 } from 'react';
-import { getDefaultScheme, ThemeScheme, useThemeScheme } from '../libs/theme';
+import {
+  getDefaultScheme,
+  ThemeScheme,
+  toggleThemeScheme,
+} from '../libs/theme';
 import './Button.css';
+import { CSSTransition } from 'react-transition-group';
 
 export type ButtonVariant = 'standard' | 'round';
 
@@ -29,9 +34,9 @@ export const BaseButton: FC<BaseButtonProps> = ({ children, id, ...props }) => {
 };
 
 export const ThemeButton: FC = () => {
-  const [scheme, setScheme] = useState<ThemeScheme>('dark');
+  const [scheme, setScheme] = useState<ThemeScheme | null>(null);
   useEffect(() => {
-    setScheme(getDefaultScheme('dark'));
+    setScheme(getDefaultScheme());
   }, []);
   return (
     <Button
@@ -39,10 +44,25 @@ export const ThemeButton: FC = () => {
       variant="round"
       id="theme-scheme"
       onClick={(e) => {
-        setScheme(useThemeScheme('dark'));
+        setScheme(toggleThemeScheme());
       }}
     >
-      {scheme === 'dark' ? '🌜' : '🌞'}
+      <CSSTransition
+        in={scheme === 'dark'}
+        timeout={10}
+        classNames="theme-emoji"
+        unmountOnExit
+      >
+        <div>🌜</div>
+      </CSSTransition>
+      <CSSTransition
+        in={scheme === 'light'}
+        timeout={10}
+        classNames="theme-emoji"
+        unmountOnExit
+      >
+        <div>🌞</div>
+      </CSSTransition>
     </Button>
   );
 };
@@ -70,6 +90,3 @@ export const Button: FC<ButtonProps> = ({
     </BaseButton>
   );
 };
-
-// standard and round
-// primary
